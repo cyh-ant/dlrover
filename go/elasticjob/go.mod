@@ -1,10 +1,11 @@
-module github.com/intelligent-machine-learning/dlrover/go/elasticjob
+module github.com/cyh-ant/dlrover/go/elasticjob
 
 go 1.23.4
 
 require (
 	github.com/go-logr/logr v1.2.0
 	github.com/golang/glog v1.0.0
+	github.com/intelligent-machine-learning/dlrover/go/elasticjob v0.0.0-20250605034333-c7f4136a65d5
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.18.1
 	github.com/sirupsen/logrus v1.8.1
