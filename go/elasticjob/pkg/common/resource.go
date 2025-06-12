@@ -18,6 +18,7 @@ package common
 
 import (
 	"context"
+	"regexp"
 
 	"github.com/golang/glog"
 	elasticv1alpha1 "github.com/intelligent-machine-learning/dlrover/go/elasticjob/api/v1alpha1"
@@ -43,6 +44,9 @@ const (
 	LabelReplicaIndexKey = "elasticjob.dlrover/replica-index"
 	// LabelRankIndexKey is the key of rankIndex.
 	LabelRankIndexKey = "elasticjob.dlrover/rank-index"
+
+	// LabelFilterRegExp is the regular expression to filter labels.
+	LabelFilterRegExp = "^elasticjob\\.dlrover/"
 )
 
 // NewPod creates a Pod according to a PodTemplateSpec
@@ -62,8 +66,11 @@ func NewPod(
 	podSpec.Labels[LabelAppNameKey] = ElasticJobAppName
 	podSpec.Labels[LabelJobNameKey] = job.Name
 
+	pattern := regexp.MustCompile(LabelFilterRegExp)
 	for key, value := range job.Labels {
-		podSpec.Labels[key] = value
+		if pattern.MatchString(key) {
+			podSpec.Labels[key] = value
+		}
 	}
 
 	for key, value := range job.Annotations {
